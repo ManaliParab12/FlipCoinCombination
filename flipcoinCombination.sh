@@ -1,4 +1,4 @@
-#!/bin/bash -x
+#!/bin/bash
 
 declare -A flip_coin
 
@@ -48,7 +48,7 @@ echo "Percentage of TT $((${flip_coin[TT]} * 100 / $n))"
 function Triplet () {
 for (( i=0; i<n; i++ ))
 do
-   triple=$((RANDOM%8))
+   triple=$((RANDOM%8));
    case $triple in
                0) flip_coin[HHH]="$((flip_coin[HHH]+1))"
                        ;;
@@ -79,7 +79,21 @@ echo "Percentage of THT $((${flip_coin[THT]} * 100 / $n))"
 echo "Percentage of TTH $((${flip_coin[TTH]} * 100 / $n))"
 echo "Percentage of TTT $((${flip_coin[TTT]} * 100 / $n))"
 }
-
 Singlet
 Doublet
 Triplet
+echo "${flip_coin[@]}"
+echo "${!flip_coin[@]}"
+
+lose=`echo ${flip_coin[H]}`
+win=`echo ${flip_coin[H]}`
+
+for i in ${flip_coin[@]}
+do
+   if [[ $i -gt $win ]]
+then
+    win=$i
+   fi
+done
+
+echo "Winning Combination" $win
